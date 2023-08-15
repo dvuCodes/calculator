@@ -9,27 +9,30 @@
   <body>
     <main>
       <div class="calculator-container">
-        <div class="calc-output"></div>
+        <div class="calc-output">
+          <div class="input-display" id="input-display"></div>
+          <div class="calcuations" id="calculations-el"></div>
+        </div>
         <div class="calc-input-container">
-          <button class="input-btns">AC</button>
-          <button class="input-btns">C</button>
-          <button class="input-btns">%</button>
-          <button class="input-btns">&divide;</button>
-          <button class="input-btns">7</button>
-          <button class="input-btns">8</button>
-          <button class="input-btns">9</button>
-          <button class="input-btns">+</button>
-          <button class="input-btns">4</button>
-          <button class="input-btns">5</button>
-          <button class="input-btns">6</button>
-          <button class="input-btns">-</button>
-          <button class="input-btns">1</button>
-          <button class="input-btns">2</button>
-          <button class="input-btns">3</button>
-          <button class="input-btns">x</button>
-          <button class="input-btns">0</button>
-          <button class="input-btns">.</button>
-          <button class="input-btns" id="equals">=</button>
+          <button class="input-btns" data-operator="AC">AC</button>
+          <button class="input-btns" data-operator="C">C</button>
+          <button class="input-btns" data-operator="%">%</button>
+          <button class="input-btns" data-operator="/">&divide;</button>
+          <button class="input-btns" data-number="7">7</button>
+          <button class="input-btns" data-number="8">8</button>
+          <button class="input-btns" data-number="9">9</button>
+          <button class="input-btns" data-operator="+">+</button>
+          <button class="input-btns" data-number="4">4</button>
+          <button class="input-btns" data-number="5">5</button>
+          <button class="input-btns" data-number="6">6</button>
+          <button class="input-btns" data-operator="-">-</button>
+          <button class="input-btns" data-number="1">1</button>
+          <button class="input-btns" data-number="2">2</button>
+          <button class="input-btns" data-number="3">3</button>
+          <button class="input-btns" data-operator="x">x</button>
+          <button class="input-btns" data-number="0">0</button>
+          <button class="input-btns" data-decimal=".">.</button>
+          <button class="input-btns" data-operator="=" id="equals">=</button>
         </div>
       </div>
     </main>
