@@ -1,7 +1,12 @@
 "use strict";
 const inputDisplayEl = document.getElementById("input-display");
+const calculationsDisplayEl = document.getElementById("calculations-el");
 
 let displayValue = "";
+let firstNumber = null;
+let secondNumber = null;
+let selectedOperator = null;
+let calculatedResult = null;
 
 document.addEventListener("click", (e) => {
   const data = e.target.dataset;
@@ -13,28 +18,54 @@ document.addEventListener("click", (e) => {
     "&times;": " \u00d7",
   };
 
-  if (operator === "C") displayValue = "";
-  if (operator === "%") displayValue += " %";
-  if (operator === "/") displayValue += symbol["&divide;"];
-  if (operator === "+") displayValue += " +";
-  if (operator === "-") displayValue += " -";
-  if (operator === "x") displayValue += symbol["&times;"];
-  if (number === "7") displayValue += " 7";
-  if (number === "8") displayValue += " 8";
-  if (number === "9") displayValue += " 9";
-  if (number === "6") displayValue += " 6";
-  if (number === "5") displayValue += " 5";
-  if (number === "4") displayValue += " 4";
-  if (number === "3") displayValue += " 3";
-  if (number === "2") displayValue += " 2";
-  if (number === "1") displayValue += " 1";
-  if (operator === "=") operate;
+  // we know its the first number if operator is Null
+  // else we know any numbers after is secondNumber
+
+  if (number) {
+    if (!calculatedResult) {
+      displayValue += number;
+      if (selectedOperator === null) {
+        firstNumber = displayValue;
+      } else {
+        // second number after the firstNumber and operator hence length + 1
+        secondNumber = displayValue.slice(firstNumber.length + 1);
+      }
+    }
+  }
+
+  if (operator && operator !== "=") {
+    if (operator === "C") {
+      displayValue = "";
+      calculationsDisplayEl.textContent = displayValue;
+      firstNumber = secondNumber = selectedOperator = null;
+    }
+    if (
+      operator === "+" ||
+      operator === "-" ||
+      operator === "/" ||
+      operator === "x"
+    ) {
+      displayValue += operator;
+      selectedOperator = operator;
+    }
+  }
+
+  if (operator === "=") {
+    const result = operate(firstNumber, selectedOperator, secondNumber);
+    calculationsDisplayEl.textContent = result;
+    displayValue = result;
+    console.log(result);
+  }
 
   if (e.target.dataset) {
     inputDisplayEl.innerHTML = displayValue;
   }
 
-  console.log(displayValue);
+  console.log(typeof firstNumber, {
+    firstNumber,
+    selectedOperator,
+    secondNumber,
+  });
 });
 
 function operate(x, operator, y) {
@@ -47,3 +78,5 @@ function operate(x, operator, y) {
   if (operator === "x") return num1 * num2;
   if (operator === "/") return num1 / num2;
 }
+
+console.log(operate("7", "-", "1"));
