@@ -12,12 +12,6 @@ document.addEventListener("click", (e) => {
   const data = e.target.dataset;
   const { operator, number } = data;
 
-  // render the divide and multiply symbols
-  const symbol = {
-    "&divide;": " \u00f7",
-    "&times;": " \u00d7",
-  };
-
   // we know its the first number if operator is Null
   // else we know any numbers after is secondNumber
 
@@ -30,6 +24,11 @@ document.addEventListener("click", (e) => {
         // second number after the firstNumber and operator hence length + 1
         secondNumber = displayValue.slice(firstNumber.length + 1);
       }
+    } else {
+      displayValue = "";
+      displayValue = number;
+      firstNumber = displayValue;
+      calculatedResult = secondNumber = selectedOperator = null;
     }
   }
 
@@ -38,6 +37,7 @@ document.addEventListener("click", (e) => {
       displayValue = "";
       calculationsDisplayEl.textContent = displayValue;
       firstNumber = secondNumber = selectedOperator = null;
+      calculatedResult = null;
     }
     if (
       operator === "+" ||
@@ -51,10 +51,10 @@ document.addEventListener("click", (e) => {
   }
 
   if (operator === "=") {
-    const result = operate(firstNumber, selectedOperator, secondNumber);
-    calculationsDisplayEl.textContent = result;
-    displayValue = result;
-    console.log(result);
+    calculatedResult = operate(firstNumber, selectedOperator, secondNumber);
+    calculationsDisplayEl.textContent = calculatedResult;
+    displayValue = calculatedResult;
+    console.log(calculatedResult);
   }
 
   if (e.target.dataset) {
