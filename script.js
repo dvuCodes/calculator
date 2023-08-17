@@ -1,71 +1,66 @@
 "use strict";
 const inputDisplayEl = document.getElementById("input-display");
 const calculationsDisplayEl = document.getElementById("calculations-el");
+const inputContainerEl = document.getElementById("calc-input-container");
 
 let displayValue = "";
-let firstNumber = null;
-let secondNumber = null;
-let selectedOperator = null;
-let calculatedResult = null;
+let firstNumber = "";
+let secondNumber = "";
+let selectedOperator = "";
+let calculatedResult = "";
+let previousKeyType = "";
 
-document.addEventListener("click", (e) => {
+inputContainerEl.addEventListener("click", (e) => {
   const data = e.target.dataset;
-  const { operator, number } = data;
+  const { action, number } = data;
 
-  // we know its the first number if operator is Null
-  // else we know any numbers after is secondNumber
+  if (
+    action === "divide" ||
+    action === "add" ||
+    action === "subtract" ||
+    action === "multiply"
+  ) {
+    selectedOperator = action;
+    previousKeyType = action;
+    displayValue += action;
+    console.log(`operator selected`);
+  }
+
+  if (action === "decimal") {
+    previousKeyType = action;
+    console.log(`decimal selected`);
+  }
+
+  if (action === "C") {
+    initialState();
+    console.log(`clear selected`);
+  }
 
   if (number) {
-    if (!calculatedResult) {
-      displayValue += number;
-      if (selectedOperator === null) {
-        firstNumber = displayValue;
-      } else {
-        // second number after the firstNumber and operator hence length + 1
-        secondNumber = displayValue.slice(firstNumber.length + 1);
-      }
-    } else {
-      displayValue = "";
-      displayValue = number;
-      firstNumber = displayValue;
-      calculatedResult = secondNumber = selectedOperator = null;
-    }
-  }
-
-  if (operator && operator !== "=") {
-    if (operator === "C") {
-      displayValue = "";
-      calculationsDisplayEl.textContent = displayValue;
-      firstNumber = secondNumber = selectedOperator = null;
-      calculatedResult = null;
-    }
     if (
-      operator === "+" ||
-      operator === "-" ||
-      operator === "/" ||
-      operator === "x"
+      previousKeyType === "divide" ||
+      previousKeyType === "add" ||
+      previousKeyType === "subtract" ||
+      previousKeyType === "multiply"
     ) {
-      displayValue += operator;
-      selectedOperator = operator;
+      secondNumber += number;
+      previousKeyType = number;
+      displayValue += number;
+      console.log(`second number selected`);
+    } else {
+      firstNumber += number;
+      previousKeyType = number;
+      displayValue += number;
+      console.log(`first number selected`);
     }
   }
 
-  if (operator === "=") {
+  if (action === "=") {
     calculatedResult = operate(firstNumber, selectedOperator, secondNumber);
     calculationsDisplayEl.textContent = calculatedResult;
-    displayValue = calculatedResult;
-    console.log(calculatedResult);
   }
 
-  if (e.target.dataset) {
-    inputDisplayEl.innerHTML = displayValue;
-  }
-
-  console.log(typeof firstNumber, {
-    firstNumber,
-    selectedOperator,
-    secondNumber,
-  });
+  console.log({ firstNumber, selectedOperator, secondNumber, previousKeyType });
 });
 
 function operate(x, operator, y) {
@@ -73,10 +68,18 @@ function operate(x, operator, y) {
   const num1 = Number(x);
   const num2 = Number(y);
 
-  if (operator === "+") return num1 + num2;
-  if (operator === "-") return num1 - num2;
-  if (operator === "x") return num1 * num2;
-  if (operator === "/") return num1 / num2;
+  if (operator === "add") return num1 + num2;
+  if (operator === "subtract") return num1 - num2;
+  if (operator === "multiply") return num1 * num2;
+  if (operator === "divide") return num1 / num2;
 }
 
-console.log(operate("7", "-", "1"));
+// function to reset state
+function initialState() {
+  displayValue = "";
+  firstNumber = "";
+  secondNumber = "";
+  selectedOperator = "";
+  calculatedResult = "";
+  previousKeyType = "";
+}
