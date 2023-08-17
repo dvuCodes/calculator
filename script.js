@@ -22,7 +22,10 @@ inputContainerEl.addEventListener("click", (e) => {
   ) {
     selectedOperator = action;
     previousKeyType = action;
-    displayValue += action;
+    firstNumber = displayValue;
+    calculationsDisplayEl.textContent = displayValue;
+    displayValue = "";
+
     console.log(`operator selected`);
   }
 
@@ -36,31 +39,27 @@ inputContainerEl.addEventListener("click", (e) => {
     console.log(`clear selected`);
   }
 
+  // display = ""
+  // update display with selected number
+  // firstNumber is stored after I select an operator
+  // firstNumber = display
+  // secondNumber is stored and math is eval after I hit equals
+  //
+
   if (number) {
-    if (
-      previousKeyType === "divide" ||
-      previousKeyType === "add" ||
-      previousKeyType === "subtract" ||
-      previousKeyType === "multiply"
-    ) {
-      secondNumber += number;
-      previousKeyType = number;
-      displayValue += number;
-      console.log(`second number selected`);
-    } else {
-      firstNumber += number;
-      previousKeyType = number;
-      displayValue += number;
-      console.log(`first number selected`);
-    }
+    displayValue += number;
   }
 
   if (action === "=") {
+    secondNumber = displayValue;
+    displayValue = "";
     calculatedResult = operate(firstNumber, selectedOperator, secondNumber);
     calculationsDisplayEl.textContent = calculatedResult;
   }
 
   console.log({ firstNumber, selectedOperator, secondNumber, previousKeyType });
+  console.log(displayValue);
+  inputDisplayEl.textContent = displayValue;
 });
 
 function operate(x, operator, y) {
@@ -82,4 +81,5 @@ function initialState() {
   selectedOperator = "";
   calculatedResult = "";
   previousKeyType = "";
+  calculationsDisplayEl.textContent = "";
 }
