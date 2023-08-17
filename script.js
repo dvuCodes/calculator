@@ -32,6 +32,11 @@ inputContainerEl.addEventListener("click", (e) => {
   if (action === "decimal") {
     displayValue += ".";
   }
+  if (action === "delete") {
+    const newChar = displayValue.slice(0, -1);
+    displayValue = newChar;
+    console.log(`delete selected`, { displayValue });
+  }
 
   // clears variable states
   if (action === "C") {
@@ -113,7 +118,7 @@ function operate(x, operator, y) {
   if (operator === "add") return num1 + num2;
   if (operator === "subtract") return num1 - num2;
   if (operator === "multiply") return num1 * num2;
-  if (operator === "divide") return (num1 / num2).toFixed(10);
+  if (operator === "divide") return num1 / num2;
 }
 
 // function to reset state
