@@ -118,10 +118,6 @@ button {
   background-color: green;
 }
 
-#delete {
-  background-color: rgba(255, 0, 0, 0.5);
-}
-
 footer {
   display: flex;
   margin: 2em 0;
