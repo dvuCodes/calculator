@@ -14,6 +14,7 @@ inputContainerEl.addEventListener("click", (e) => {
   const data = e.target.dataset;
   const { action, number } = data;
 
+  // checks for when an operator has been set and stores the first number based off the displayValue
   if (
     action === "divide" ||
     action === "add" ||
@@ -25,31 +26,23 @@ inputContainerEl.addEventListener("click", (e) => {
     firstNumber = displayValue;
     calculationsDisplayEl.textContent = displayValue;
     displayValue = "";
-
-    console.log(`operator selected`);
   }
 
   if (action === "decimal") {
-    previousKeyType = action;
-    console.log(`decimal selected`);
+    displayValue += ".";
   }
 
+  // clears variable states
   if (action === "C") {
     initialState();
-    console.log(`clear selected`);
   }
 
-  // display = ""
-  // update display with selected number
-  // firstNumber is stored after I select an operator
-  // firstNumber = display
-  // secondNumber is stored and math is eval after I hit equals
-  //
-
+  // updates displayValue with the selected number value
   if (number) {
     displayValue += number;
   }
 
+  // runs operate function and stores secondNumber after = has been selected
   if (action === "=") {
     secondNumber = displayValue;
     displayValue = "";
@@ -57,8 +50,6 @@ inputContainerEl.addEventListener("click", (e) => {
     calculationsDisplayEl.textContent = calculatedResult;
   }
 
-  console.log({ firstNumber, selectedOperator, secondNumber, previousKeyType });
-  console.log(displayValue);
   inputDisplayEl.textContent = displayValue;
 });
 
