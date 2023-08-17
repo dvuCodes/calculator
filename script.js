@@ -28,6 +28,7 @@ inputContainerEl.addEventListener("click", (e) => {
     displayValue = "";
   }
 
+  // checks if decimal key has been selected
   if (action === "decimal") {
     displayValue += ".";
   }
@@ -39,11 +40,62 @@ inputContainerEl.addEventListener("click", (e) => {
 
   // updates displayValue with the selected number value
   if (number) {
+    11;
     displayValue += number;
   }
 
   // runs operate function and stores secondNumber after = has been selected
   if (action === "=") {
+    secondNumber = displayValue;
+    displayValue = "";
+    calculatedResult = operate(firstNumber, selectedOperator, secondNumber);
+    calculationsDisplayEl.textContent = calculatedResult;
+  }
+
+  inputDisplayEl.textContent = displayValue;
+});
+
+document.addEventListener("keydown", (e) => {
+  const key = e.code;
+  console.log(key);
+
+  if (key === "Numpad0" || key === "Digit0") displayValue += 0;
+  if (key === "Numpad1" || key === "Digit1") displayValue += 1;
+  if (key === "Numpad2" || key === "Digit2") displayValue += 2;
+  if (key === "Numpad3" || key === "Digit3") displayValue += 3;
+  if (key === "Numpad4" || key === "Digit4") displayValue += 4;
+  if (key === "Numpad5" || key === "Digit5") displayValue += 5;
+  if (key === "Numpad6" || key === "Digit6") displayValue += 6;
+  if (key === "Numpad7" || key === "Digit7") displayValue += 7;
+  if (key === "Numpad8" || key === "Digit8") displayValue += 8;
+  if (key === "Numpad9" || key === "Digit9") displayValue += 9;
+
+  if (key === "NumpadAdd" || key === "DigitAdd") {
+    selectedOperator = "add";
+    storeFirstNumberResetValues();
+  }
+
+  if (key === "NumpadSubtract" || key === "DigitSubtract") {
+    selectedOperator = "subtract";
+
+    storeFirstNumberResetValues();
+  }
+  if (key === "NumpadMultiply" || key === "DigitMultiply") {
+    selectedOperator = "multiply";
+
+    storeFirstNumberResetValues();
+  }
+  if (key === "NumpadDivide" || key === "DigitDivide") {
+    selectedOperator = "divide";
+
+    storeFirstNumberResetValues();
+  }
+  if (key === "Escape") {
+    displayValue = "";
+    calculationsDisplayEl.textContent = "";
+  }
+
+  if (key === "Enter" || key === "NumpadEnter") {
     secondNumber = displayValue;
     displayValue = "";
     calculatedResult = operate(firstNumber, selectedOperator, secondNumber);
@@ -61,7 +113,7 @@ function operate(x, operator, y) {
   if (operator === "add") return num1 + num2;
   if (operator === "subtract") return num1 - num2;
   if (operator === "multiply") return num1 * num2;
-  if (operator === "divide") return num1 / num2;
+  if (operator === "divide") return (num1 / num2).toFixed(10);
 }
 
 // function to reset state
@@ -73,4 +125,10 @@ function initialState() {
   calculatedResult = "";
   previousKeyType = "";
   calculationsDisplayEl.textContent = "";
+}
+
+function storeFirstNumberResetValues() {
+  firstNumber = displayValue;
+  calculationsDisplayEl.textContent = displayValue;
+  displayValue = "";
 }
